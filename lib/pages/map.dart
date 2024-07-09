@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/cubit/event_state.dart';
-import 'package:locomotive21/shared/utils/helpers.dart';
+import 'package:locomotive21/shared/widgets/marker_detail.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -139,50 +139,9 @@ class _MapScreenState extends State<MapScreen> {
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
-                                    return SingleChildScrollView(
-                                      padding: const EdgeInsets.all(32.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const Text(
-                                            "Nama Event",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                          Text(
-                                            event.nama,
-                                          ),
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Deskripsi",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                          Text(
-                                            event.deskripsi,
-                                          ),
-                                          const SizedBox(
-                                            height: 12,
-                                          ),
-                                          const Text(
-                                            "Jarak",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20,
-                                            ),
-                                          ),
-                                          Text(
-                                            "${calculateDistance(_currentLocation!, event.latLng)} km",
-                                          ),
-                                        ],
-                                      ),
+                                    return MarkerDetail(
+                                      event: event,
+                                      currentLocation: _currentLocation,
                                     );
                                   },
                                 );

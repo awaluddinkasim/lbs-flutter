@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "39648471123",
+    "project_id": "locomotive-lbs",
+    "storage_bucket": "locomotive-lbs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39648471123:android:0b7dd7d26ee413b6903ea6",
+        "android_client_info": {
+          "package_name": "com.example.locomotive21"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLHYJZZCKDroP3x4WeC4jDUJgxbL2FH_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
