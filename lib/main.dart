@@ -39,7 +39,8 @@ class Main extends StatelessWidget {
             surface: Colors.white,
           ),
           cardTheme: CardTheme(
-            color: Colors.indigo.shade50,
+            color: Colors.white,
+            surfaceTintColor: Colors.indigo.shade400,
           ),
           useMaterial3: true,
         ),
