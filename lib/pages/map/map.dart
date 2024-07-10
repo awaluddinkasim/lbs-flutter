@@ -62,7 +62,8 @@ class _MapScreenState extends State<MapScreen> {
       accuracy: LocationAccuracy.high,
       distanceFilter: 10,
     );
-    _positionSubscription = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+    _positionSubscription =
+        Geolocator.getPositionStream(locationSettings: locationSettings).listen(
       (Position position) {
         setState(() {
           _currentLocation = LatLng(position.latitude, position.longitude);
@@ -100,7 +101,8 @@ class _MapScreenState extends State<MapScreen> {
                 return FlutterMap(
                   mapController: _mapController,
                   options: MapOptions(
-                    initialCenter: _currentLocation ?? const LatLng(-5.135185, 119.422717),
+                    initialCenter:
+                        _currentLocation ?? const LatLng(-5.135185, 119.422717),
                     initialZoom: _currentZoom,
                     onMapEvent: (MapEvent mapEvent) {
                       if (mapEvent is MapEventMove) {
@@ -112,7 +114,8 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   children: [
                     TileLayer(
-                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.locomotive21',
                     ),
                     MarkerLayer(

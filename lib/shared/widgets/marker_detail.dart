@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:locomotive21/models/event.dart';
 import 'package:locomotive21/pages/event/event.dart';
+import 'package:locomotive21/shared/constants.dart';
 import 'package:locomotive21/shared/utils/helpers.dart';
+import 'package:locomotive21/shared/widgets/poster.dart';
 
 class MarkerDetail extends StatelessWidget {
   const MarkerDetail({
@@ -30,10 +32,43 @@ class MarkerDetail extends StatelessWidget {
             child: Container(
               height: 350,
               decoration: const BoxDecoration(
-                color: Colors.grey,
+                color: Colors.black12,
               ),
               child: Stack(
                 children: [
+                  Hero(
+                    tag: event.poster,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PosterImage(
+                              img: event.poster,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Image.network(
+                        "${Constants.baseUrl}/poster/${event.poster}",
+                        fit: BoxFit.cover,
+                        height: 350,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                   Positioned(
                     right: 0,
                     bottom: 0,

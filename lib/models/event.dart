@@ -11,6 +11,7 @@ class Event {
   final double longitude;
   final String trailer;
   final int hargaTiket;
+  final String poster;
   final String status;
   late LatLng latLng;
 
@@ -25,6 +26,7 @@ class Event {
     required this.longitude,
     required this.trailer,
     required this.hargaTiket,
+    required this.poster,
     required this.status,
   }) {
     latLng = LatLng(latitude, longitude);
@@ -42,6 +44,7 @@ class Event {
       longitude: double.parse(json['longitude']),
       trailer: json['trailer'],
       hargaTiket: json['harga_tiket'],
+      poster: json['poster'],
       status: json['status'],
     );
   }
