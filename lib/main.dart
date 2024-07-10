@@ -1,83 +1,27 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
+import 'package:locomotive21/cubit/search_cubit.dart';
 import 'package:locomotive21/pages/app.dart';
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print("Handling a background message: ${message.messageId}");
-}
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Remove this method to stop OneSignal Debugging
+  // OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+
+  OneSignal.initialize("cd22c7df-d2d2-48e7-846f-753162efb144");
+
+  // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  OneSignal.Notifications.requestPermission(true);
 
   runApp(const Main());
 }
 
-class Main extends StatefulWidget {
+class Main extends StatelessWidget {
   const Main({super.key});
-
-  @override
-  State<Main> createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  late AndroidNotificationChannel channel;
-
-  @override
-  void initState() {
-    super.initState();
-
-    channel = const AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // name
-      description: 'This channel is used for important notifications.', // description
-      importance: Importance.high,
-    );
-
-    // Daftarkan channel dengan sistem
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-
-    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              icon: android.smallIcon,
-            ),
-          ),
-        );
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('A new onMessageOpenedApp event was published!');
-      // Navigate to relevant screen based on the message
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +29,18 @@ class _MainState extends State<Main> {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => EventCubit()),
+        BlocProvider(create: (context) => SearchCubit()),
       ],
       child: MaterialApp(
         title: 'Locomotive 21 App',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.light(
+            primary: Colors.indigo.shade600,
+            surface: Colors.white,
+          ),
+          cardTheme: CardTheme(
+            color: Colors.indigo.shade50,
+          ),
           useMaterial3: true,
         ),
         home: const App(),

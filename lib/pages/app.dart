@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
-import 'package:locomotive21/pages/account.dart';
-import 'package:locomotive21/pages/home.dart';
-import 'package:locomotive21/pages/map.dart';
+import 'package:locomotive21/pages/account/account.dart';
+import 'package:locomotive21/pages/home/home.dart';
+import 'package:locomotive21/pages/map/map.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

@@ -8,14 +8,13 @@ class EventCubit extends Cubit<EventState> {
   EventCubit() : super(EventInitial());
 
   Future<void> getEvents() async {
-    try {
-      emit(EventLoading());
+    emit(EventLoading());
 
+    try {
       final events = await _eventService.getEvents();
 
       emit(EventSuccess(events));
     } catch (e) {
-      print(e.toString());
       emit(EventFailed(e.toString()));
     }
   }
