@@ -19,7 +19,8 @@ class MarkerDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final number = NumberFormat('#.##');
+    final number = NumberFormat();
+    final decimal = NumberFormat('#.##');
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(32.0),
@@ -31,6 +32,7 @@ class MarkerDetail extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: Container(
               height: 350,
+              width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.black12,
               ),
@@ -53,6 +55,7 @@ class MarkerDetail extends StatelessWidget {
                         "${Constants.baseUrl}/poster/${event.poster}",
                         fit: BoxFit.cover,
                         height: 350,
+                        width: double.infinity,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -93,7 +96,7 @@ class MarkerDetail extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            "${number.format(calculateDistance(_currentLocation!, event.latLng))} km",
+                            "${decimal.format(calculateDistance(_currentLocation!, event.latLng))} km",
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 15,
@@ -161,17 +164,20 @@ class MarkerDetail extends StatelessWidget {
             ),
           ),
           Text(
-            event.hargaTiket > 0 ? "Rp. ${event.hargaTiket}" : "Gratis",
+            event.hargaTiket > 0
+                ? "Rp. ${number.format(event.hargaTiket)}"
+                : "Gratis",
           ),
           const SizedBox(
             height: 12,
           ),
           FilledButton.tonal(
             onPressed: () {
+              Navigator.pop(context);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const EventScreen(),
+                  builder: (context) => EventScreen(event: event),
                 ),
               );
             },
