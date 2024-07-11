@@ -104,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: _password,
                 label: "Password",
                 hint: "Masukkan password",
-                obscureText: _passwordVisible,
+                obscureText: !_passwordVisible,
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: IconButton(
                   onPressed: () {
