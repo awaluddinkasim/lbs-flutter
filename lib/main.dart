@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/cubit/search_cubit.dart';
-import 'package:locomotive21/pages/app.dart';
+import 'package:locomotive21/pages/loading.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() async {
@@ -44,7 +44,7 @@ class Main extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: const App(),
+        home: const LoadingScreen(),
       ),
     );
   }
