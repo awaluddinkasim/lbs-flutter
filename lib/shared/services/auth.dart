@@ -19,6 +19,12 @@ class AuthService {
     });
   }
 
+  Future<String> resendEmailVerification(String email) async {
+    final result = await Request.post('/resend-email-verification?email=$email');
+
+    return result['message'];
+  }
+
   Future<Auth> getUser({required String token}) async {
     final result = await Request.get('/user', headers: {
       'Authorization': 'Bearer $token',

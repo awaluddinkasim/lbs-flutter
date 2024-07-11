@@ -10,6 +10,7 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService = AuthService();
 
   AuthCubit() : super(AuthInitial()) {
+    print("OK");
     checkAuth();
   }
 
@@ -27,6 +28,16 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthInitial());
         await storage.delete(key: 'token');
       }
+    } catch (e) {
+      emit(AuthFailed(e.toString()));
+    }
+  }
+
+  Future<void> resendEmailVerification(String email) async {
+    try {
+      await _authService.resendEmailVerification(email);
+
+      emit(AuthInitial());
     } catch (e) {
       emit(AuthFailed(e.toString()));
     }

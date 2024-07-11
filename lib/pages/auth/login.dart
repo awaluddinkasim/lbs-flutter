@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/auth_state.dart';
+import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/models/data_login.dart';
 import 'package:locomotive21/pages/app.dart';
 import 'package:locomotive21/pages/auth/register.dart';
-import 'package:locomotive21/shared/widgets/form/input_outline.dart';
+import 'package:locomotive21/shared/widgets/dialog/loading.dart';
+import 'package:locomotive21/shared/widgets/dialog/message.dart';
+import 'package:locomotive21/shared/widgets/form/input_styled.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               Center(
                 child: Image.asset(
                   "assets/logo.png",
@@ -40,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              InputOutline(
+              InputStyled(
                 controller: _email,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 label: "Email",
@@ -54,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
               ),
               const SizedBox(height: 16),
-              InputOutline(
+              InputStyled(
                 controller: _password,
                 obscureText: !_passwordVisible,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -84,22 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       context: context,
                       barrierDismissible: false,
                       builder: (context) {
-                        return PopScope(
-                          onPopInvoked: (didPop) => false,
-                          child: Dialog(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(16),
-                                  child: const Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return const LoadingDialog();
                       },
                     );
                   }
@@ -110,23 +98,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: Text(state.message),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                FocusScope.of(context).unfocus();
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
+                        return MessageDialog(
+                          status: 'Gagal',
+                          message: state.message,
+                          onOkPressed: () {
+                            Navigator.pop(context);
+                            FocusScope.of(context).unfocus();
+                          },
                         );
                       },
                     );
                   }
                   if (state is AuthSuccess) {
+                    context.read<EventCubit>().getEvents();
+
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

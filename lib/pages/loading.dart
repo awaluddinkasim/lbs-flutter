@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/auth_state.dart';
+import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/pages/app.dart';
 import 'package:locomotive21/pages/auth/login.dart';
 
@@ -14,6 +15,8 @@ class LoadingScreen extends StatelessWidget {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
+            context.read<EventCubit>().getEvents();
+
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => const App()),

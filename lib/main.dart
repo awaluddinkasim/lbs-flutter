@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
+import 'package:locomotive21/cubit/register_cubit.dart';
 import 'package:locomotive21/cubit/search_cubit.dart';
 import 'package:locomotive21/pages/loading.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -28,6 +29,7 @@ class Main extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => RegisterCubit()),
         BlocProvider(create: (context) => EventCubit()),
         BlocProvider(create: (context) => SearchCubit()),
       ],
