@@ -5,6 +5,6 @@ class RegisterService {
   Future<String> register(DataUser user) async {
     final result = await Request.post('/register', data: user.toJson());
 
-    return result['success'];
+    return result['message'];
   }
 }

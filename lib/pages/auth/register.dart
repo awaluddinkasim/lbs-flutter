@@ -112,7 +112,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _passwordVisible = !_passwordVisible;
                     });
                   },
-                  icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility),
+                  icon: Icon(_passwordVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility),
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
@@ -225,6 +227,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onOkPressed: () {
                           Navigator.pop(context);
                         },
+                      ),
+                    );
+                  }
+                  if (state is RegisterSuccess) {
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context);
+                    }
+
+                    showDialog(
+                      context: context,
+                      builder: (context) => PopScope(
+                        onPopInvoked: (didPop) => false,
+                        child: MessageDialog(
+                          status: 'Berhasil',
+                          message: state.message,
+                          onOkPressed: () {
+                            Navigator.pop(context);
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     );
                   }
