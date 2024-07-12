@@ -214,8 +214,17 @@ class EventScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 22),
               child: FilledButton.icon(
                 onPressed: () async {
-                  if (!await launchUrl(Uri.parse(event.trailer))) {
-                    throw Exception('Could not launch ${event.trailer}');
+                  final messenger = ScaffoldMessenger.of(context);
+
+                  final uri = Uri.parse(event.trailer);
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(uri);
+                  } else {
+                    messenger.showSnackBar(
+                      const SnackBar(
+                        content: Text("Can't launch url"),
+                      ),
+                    );
                   }
                 },
                 icon: const Icon(Icons.play_circle_outline_rounded),
