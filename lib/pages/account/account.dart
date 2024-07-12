@@ -3,11 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/auth_state.dart';
+import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/pages/account/edit.dart';
 import 'package:locomotive21/shared/widgets/user_detail.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
+
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      context.read<EventCubit>().getEvents();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,24 +110,25 @@ class AccountScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EditAccountScreen(),
-                                  ),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) => EditAccountScreen(
+                                //       user: state.auth.user,
+                                //     ),
+                                //   ),
+                                // );
                               },
                               child: const Wrap(
                                 children: [
-                                  Icon(
-                                    Icons.edit_note_rounded,
-                                    size: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 6,
-                                  ),
-                                  Text("Edit"),
+                                  // Icon(
+                                  //   Icons.edit_note_rounded,
+                                  //   size: 20,
+                                  // ),
+                                  // SizedBox(
+                                  //   width: 6,
+                                  // ),
+                                  // Text("Edit"),
                                 ],
                               ),
                             ),

@@ -58,7 +58,6 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: const EdgeInsets.all(16.0),
             child: BlocBuilder<SearchCubit, SearchState>(
               builder: (context, state) {
-                print(state);
                 if (state is SearchLoading) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(
@@ -88,7 +87,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(event.lokasi, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                Text(event.lokasi,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
                               ],
                             ),
                             trailing: const Icon(Icons.chevron_right),
