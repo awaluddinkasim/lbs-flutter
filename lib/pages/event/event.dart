@@ -222,7 +222,7 @@ class EventScreen extends StatelessWidget {
                   } else {
                     messenger.showSnackBar(
                       const SnackBar(
-                        content: Text("Can't launch url"),
+                        content: Text("Link tidak valid"),
                       ),
                     );
                   }
