@@ -29,6 +29,10 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     _getCurrentLocation();
     _startListeningToLocationChanges();
+
+    Future.delayed(Duration.zero, () {
+      BlocProvider.of<EventCubit>(context).getEvents();
+    });
   }
 
   @override
