@@ -13,6 +13,7 @@ class Event {
   final int hargaTiket;
   final String poster;
   final String status;
+  final String contactPerson;
   late LatLng latLng;
 
   Event({
@@ -27,6 +28,7 @@ class Event {
     required this.trailer,
     required this.hargaTiket,
     required this.poster,
+    required this.contactPerson,
     required this.status,
   }) {
     latLng = LatLng(latitude, longitude);
@@ -45,6 +47,7 @@ class Event {
       trailer: json['trailer'],
       hargaTiket: json['harga_tiket'],
       poster: json['poster'],
+      contactPerson: json['contact_person'],
       status: json['status'],
     );
   }

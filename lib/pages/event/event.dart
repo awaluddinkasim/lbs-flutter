@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:locomotive21/models/event.dart';
 import 'package:locomotive21/shared/constants.dart';
 import 'package:locomotive21/shared/widgets/poster.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventScreen extends StatelessWidget {
   final Event event;
@@ -30,7 +31,7 @@ class EventScreen extends StatelessWidget {
                       height: 30,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 24),
+                      padding: const EdgeInsets.only(right: 24, top: 16),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -192,13 +193,13 @@ class EventScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text(
-                          "Alamat Event",
+                          "Contact Person",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
-                        Text(event.lokasi),
+                        Text(event.contactPerson),
                       ],
                     ),
                   ),
@@ -208,11 +209,40 @@ class EventScreen extends StatelessWidget {
             Divider(
               color: Colors.grey.shade300,
             ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 22),
+              child: FilledButton.icon(
+                onPressed: () async {
+                  if (!await launchUrl(Uri.parse(event.trailer))) {
+                    throw Exception('Could not launch ${event.trailer}');
+                  }
+                },
+                icon: const Icon(Icons.play_circle_outline_rounded),
+                label: const Text("Nonton Trailer"),
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(22),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Text(
+                    "Alamat",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(event.lokasi),
+                  const SizedBox(height: 20),
                   const Text(
                     "Deskripsi",
                     style: TextStyle(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/auth_state.dart';
 import 'package:locomotive21/pages/account/edit.dart';
+import 'package:locomotive21/shared/widgets/user_detail.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
@@ -40,6 +41,10 @@ class AccountScreen extends StatelessWidget {
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                   ),
+                                  child: Image.asset(
+                                    "assets/avatar.png",
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                               const SizedBox(
@@ -47,7 +52,8 @@ class AccountScreen extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Text(
                                       state.auth.user.nama,
@@ -93,7 +99,8 @@ class AccountScreen extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const EditAccountScreen(),
+                                    builder: (context) =>
+                                        const EditAccountScreen(),
                                   ),
                                 );
                               },
@@ -119,12 +126,27 @@ class AccountScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              const Text("Name"),
-                              const Text("Email"),
-                              const Text("Phone"),
-                              const SizedBox(
-                                height: 16,
+                              UserDetail(
+                                label: "Nama",
+                                value: state.auth.user.nama,
                               ),
+                              UserDetail(
+                                label: "Jenis Kelamin",
+                                value: state.auth.user.jenisKelamin,
+                              ),
+                              UserDetail(
+                                label: "No. HP",
+                                value: state.auth.user.noHp,
+                              ),
+                              UserDetail(
+                                label: "Tanggal Lahir",
+                                value: state.auth.user.tglLahir,
+                              ),
+                              UserDetail(
+                                label: "Alamat",
+                                value: state.auth.user.alamat,
+                              ),
+                              const SizedBox(height: 16),
                               FilledButton.icon(
                                 onPressed: () {
                                   context.read<AuthCubit>().logout();
@@ -136,6 +158,7 @@ class AccountScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 )
