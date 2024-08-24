@@ -11,7 +11,7 @@ class MarkerDetail extends StatelessWidget {
   const MarkerDetail({
     super.key,
     required this.event,
-    required LatLng? currentLocation,
+    LatLng? currentLocation,
   }) : _currentLocation = currentLocation;
 
   final Event event;
@@ -72,41 +72,42 @@ class MarkerDetail extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 16,
-                      ),
-                      margin: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Wrap(
-                        children: [
-                          const Icon(
-                            Icons.location_on_rounded,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "${decimal.format(calculateDistance(_currentLocation!, event.latLng))} km",
-                            style: const TextStyle(
+                  if (_currentLocation != null)
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8,
+                          horizontal: 16,
+                        ),
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Wrap(
+                          children: [
+                            const Icon(
+                              Icons.location_on_rounded,
                               color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              size: 20,
                             ),
-                          ),
-                        ],
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "${decimal.format(calculateDistance(_currentLocation!, event.latLng))} km",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -164,9 +165,7 @@ class MarkerDetail extends StatelessWidget {
             ),
           ),
           Text(
-            event.hargaTiket > 0
-                ? "Rp. ${number.format(event.hargaTiket)}"
-                : "Gratis",
+            event.hargaTiket > 0 ? "Rp. ${number.format(event.hargaTiket)}" : "Gratis",
           ),
           const SizedBox(
             height: 12,
@@ -183,6 +182,14 @@ class MarkerDetail extends StatelessWidget {
             },
             child: const Text("Lihat Detail"),
           ),
+          if (event.status != 'selesai')
+            FilledButton.icon(
+              onPressed: () {
+                Navigator.pop(context, "${event.latLng.longitude},${event.latLng.latitude}");
+              },
+              icon: const Icon(Icons.directions),
+              label: const Text("Rute"),
+            ),
         ],
       ),
     );

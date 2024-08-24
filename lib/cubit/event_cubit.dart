@@ -20,6 +20,7 @@ class EventCubit extends Cubit<EventState> {
 
       emit(EventSuccess(events));
     } catch (e) {
+      print(e);
       emit(EventFailed(e.toString()));
     }
   }

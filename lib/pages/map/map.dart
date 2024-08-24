@@ -7,7 +7,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
 import 'package:locomotive21/cubit/event_state.dart';
+import 'package:locomotive21/cubit/location_cubit.dart';
 import 'package:locomotive21/pages/map/search.dart';
+import 'package:locomotive21/shared/services/direction.dart';
 import 'package:locomotive21/shared/widgets/marker_detail.dart';
 
 class MapScreen extends StatefulWidget {
@@ -21,8 +23,19 @@ class _MapScreenState extends State<MapScreen> {
   final MapController _mapController = MapController();
   StreamSubscription<Position>? _positionSubscription;
 
+  late LatLng _initialLocation;
   LatLng? _currentLocation;
   double _currentZoom = 13.0;
+
+  List<LatLng> _points = [];
+
+  Future<void> _getCoordinates(String from, String to) async {
+    List result = await DirectionService.getDirection(from, to);
+
+    setState(() {
+      _points = result.map((e) => LatLng(e[1], e[0])).toList();
+    });
+  }
 
   @override
   void initState() {
@@ -42,6 +55,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _getCurrentLocation() async {
+    _initialLocation = context.read<LocationCubit>().state;
+
     try {
       LocationPermission permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
@@ -66,8 +81,7 @@ class _MapScreenState extends State<MapScreen> {
       accuracy: LocationAccuracy.high,
       distanceFilter: 10,
     );
-    _positionSubscription =
-        Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+    _positionSubscription = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
       (Position position) {
         setState(() {
           _currentLocation = LatLng(position.latitude, position.longitude);
@@ -90,6 +104,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<LocationCubit>().resetLocation();
+
     return Stack(
       children: [
         _currentLocation == null
@@ -105,8 +121,9 @@ class _MapScreenState extends State<MapScreen> {
                 return FlutterMap(
                   mapController: _mapController,
                   options: MapOptions(
-                    initialCenter:
-                        _currentLocation ?? const LatLng(-5.135185, 119.422717),
+                    initialCenter: _initialLocation != const LatLng(0, 0)
+                        ? _initialLocation
+                        : _currentLocation ?? const LatLng(-5.135185, 119.422717),
                     initialZoom: _currentZoom,
                     onMapEvent: (MapEvent mapEvent) {
                       if (mapEvent is MapEventMove) {
@@ -118,10 +135,16 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   children: [
                     TileLayer(
-                      urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.example.locomotive21',
                     ),
+                    PolylineLayer(polylines: [
+                      Polyline(
+                        points: _points,
+                        strokeWidth: 4,
+                        color: Colors.blue,
+                      ),
+                    ]),
                     MarkerLayer(
                       markers: [
                         Marker(
@@ -157,7 +180,18 @@ class _MapScreenState extends State<MapScreen> {
                                           currentLocation: _currentLocation,
                                         );
                                       },
-                                    );
+                                    ).then((to) {
+                                      if (to != null) {
+                                        _getCoordinates(
+                                          "${_currentLocation!.longitude},${_currentLocation!.latitude}",
+                                          "$to",
+                                        );
+                                      } else {
+                                        setState(() {
+                                          _points = [];
+                                        });
+                                      }
+                                    });
                                   },
                                   child: Icon(
                                     Icons.location_on,

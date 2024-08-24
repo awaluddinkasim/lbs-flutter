@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
+import 'package:locomotive21/cubit/location_cubit.dart';
 import 'package:locomotive21/cubit/register_cubit.dart';
 import 'package:locomotive21/cubit/search_cubit.dart';
 import 'package:locomotive21/pages/loading.dart';
@@ -32,6 +33,7 @@ class Main extends StatelessWidget {
         BlocProvider(create: (context) => RegisterCubit()),
         BlocProvider(create: (context) => EventCubit()),
         BlocProvider(create: (context) => SearchCubit()),
+        BlocProvider(create: (context) => LocationCubit()),
       ],
       child: MaterialApp(
         title: 'Locomotive 21 App',

@@ -19,8 +19,14 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    const List pages = [
-      HomeScreen(),
+    List pages = [
+      HomeScreen(
+        changePage: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
       MapScreen(),
       AccountScreen(),
     ];
