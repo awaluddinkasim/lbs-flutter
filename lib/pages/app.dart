@@ -27,8 +27,8 @@ class _AppState extends State<App> {
           });
         },
       ),
-      MapScreen(),
-      AccountScreen(),
+      const MapScreen(),
+      const AccountScreen(),
     ];
 
     return BlocConsumer<AuthCubit, AuthState>(

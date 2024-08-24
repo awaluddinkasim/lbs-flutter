@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:locomotive21/cubit/auth_cubit.dart';
 import 'package:locomotive21/cubit/auth_state.dart';
 import 'package:locomotive21/cubit/event_cubit.dart';
-import 'package:locomotive21/pages/account/edit.dart';
 import 'package:locomotive21/shared/widgets/user_detail.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -66,8 +64,7 @@ class _AccountScreenState extends State<AccountScreen> {
                               ),
                               Expanded(
                                 child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Text(
                                       state.auth.user.nama,

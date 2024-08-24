@@ -97,7 +97,7 @@ class MarkerDetail extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              "${decimal.format(calculateDistance(_currentLocation!, event.latLng))} km",
+                              "${decimal.format(calculateDistance(_currentLocation, event.latLng))} km",
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,

@@ -10,7 +10,6 @@ class AuthCubit extends Cubit<AuthState> {
   final AuthService _authService = AuthService();
 
   AuthCubit() : super(AuthInitial()) {
-    print("OK");
     checkAuth();
   }
 

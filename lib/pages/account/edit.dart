@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:locomotive21/models/user.dart';
-import 'package:locomotive21/shared/widgets/form/dropdown_outline.dart';
 import 'package:locomotive21/shared/widgets/form/input_outline.dart';
 
 class EditAccountScreen extends StatefulWidget {
@@ -23,9 +21,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
   final _tglLahir = TextEditingController();
   final _alamat = TextEditingController();
 
-  DateTime? _tglLahirSelected;
-  String? _jenisKelamin;
-
   bool _passwordVisible = false;
 
   @override
@@ -35,7 +30,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     _noHp.text = widget.user.noHp;
     _tglLahir.text = widget.user.tglLahir;
     _alamat.text = widget.user.alamat;
-    _jenisKelamin = widget.user.jenisKelamin;
 
     return Scaffold(
       appBar: AppBar(
@@ -86,9 +80,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                       _passwordVisible = !_passwordVisible;
                     });
                   },
-                  icon: Icon(_passwordVisible
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility),
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
@@ -118,12 +110,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               FilledButton(
                 onPressed: () {},
-                child: Text("Simpan"),
+                child: const Text("Simpan"),
               ),
             ],
           ),

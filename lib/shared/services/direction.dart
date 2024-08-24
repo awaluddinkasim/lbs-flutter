@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:locomotive21/shared/utils/dio.dart';
 
 class DirectionService {
   static const String _baseUrl = "https://api.openrouteservice.org/v2/directions/driving-car";

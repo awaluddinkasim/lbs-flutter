@@ -40,7 +40,7 @@ class InputStyled extends StatelessWidget {
         hintText: _hint,
         prefixIcon: _prefixIcon,
         suffixIcon: _suffixIcon,
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(24),
           ),
@@ -56,11 +56,11 @@ class InputStyled extends StatelessWidget {
             topRight: Radius.circular(18),
           ),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.red,
           ),
-          borderRadius: const BorderRadius.only(
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(8),
             bottomRight: Radius.circular(8),
             bottomLeft: Radius.circular(18),

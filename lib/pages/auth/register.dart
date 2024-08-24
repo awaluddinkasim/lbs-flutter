@@ -112,9 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       _passwordVisible = !_passwordVisible;
                     });
                   },
-                  icon: Icon(_passwordVisible
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  icon: Icon(_passwordVisible ? Icons.visibility_off : Icons.visibility),
                 ),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
@@ -267,7 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           );
                     }
                   },
-                  child: Text("Daftar"),
+                  child: const Text("Daftar"),
                 ),
               ),
             ],
